@@ -1,3 +1,6 @@
+.run/
+build/
+.gradle/
 # Compiled class file
 *.class
 

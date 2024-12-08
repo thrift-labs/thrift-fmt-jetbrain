@@ -1,0 +1,22 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <id>thriftlabs.thrift-formatter</id>
+    <name>Thrift-Formatter</name>
+    <vendor email="alingse@foxmail.com" url="https://github.com/thrift-labs">Thrift Labs</vendor>
+    <description><![CDATA[
+    just a copy of thrift-fmt
+    just a copy of thrift-fmt
+    just a copy of thrift-fmt
+    just a copy of thrift-fmt
+  ]]></description>
+    <depends>com.intellij.modules.platform</depends>
+    <extensions defaultExtensionNs="com.intellij">
+        <fileType
+                name="Thrift"
+                implementationClass="thriftlabs.thriftformatter.ThriftFileType"
+                fieldName="INSTANCE"
+                language="Thrift"
+                extensions="thrift"/>
+        <formattingService implementation="thriftlabs.thriftformatter.ThriftFormatterService"/>
+    </extensions>
+</idea-plugin>
