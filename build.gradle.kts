@@ -21,7 +21,7 @@ repositories {
 
 dependencies {
     implementation("thriftlabs:thriftparser:0.0.4")
-    implementation("thriftlabs:thriftfmt:0.0.2")
+    implementation("thriftlabs:thriftfmt:0.0.4")
 }
 
 // Configure Gradle IntelliJ Plugin

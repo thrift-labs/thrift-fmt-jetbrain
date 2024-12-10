@@ -6,6 +6,7 @@ import com.intellij.formatting.service.FormattingService
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationType
 import com.intellij.notification.Notifications
+import com.intellij.openapi.components.service
 import com.intellij.psi.PsiFile
 
 import thriftlabs.thriftfmt.Option
@@ -23,27 +24,37 @@ class ThriftFormatterService: AsyncDocumentFormattingService() {
     }
 
     override fun createFormattingTask(formattingRequest: AsyncFormattingRequest): FormattingTask? {
-        val filename = formattingRequest.context.containingFile.name;
-        val text = formattingRequest.documentText;
-        val data = Thrift.parse(text);
+        val settings = service<ThriftFormatterSetting>()
+        val filename = formattingRequest.context.containingFile.name
+        val text = formattingRequest.documentText
+        val data = Thrift.parse(text)
         if (!data.isSuccess) {
             println("Error: Parsing failed for file: $filename")
             notifyUser("Parsing failed for file: $filename")
-            return null;
+            return null
         }
 
-        val opt = Option();
+        val keepComment = true // always
+        val opt = Option(
+            settings.indentSize,
+            settings.patchRequired,
+            settings.patchSeparator,
+            keepComment,
+            settings.alignByAssign,
+            settings.alignByField,
+        )
+        println(opt.toString())
         val formatter = ThriftFormatter(data, opt)
         val fmtText = formatter.format()
         if (fmtText == text) {
-            notifyUser("no need format: $filename")
-            return null;
+            // notifyUser("no need format: $filename")
+            return null
         }
 
         return object : FormattingTask {
             override fun run() {
                 formattingRequest.onTextReady(fmtText)
-                notifyUser("Success format done: $filename")
+                // notifyUser("Success format done: $filename")
             }
             override fun cancel(): Boolean {
                 return false

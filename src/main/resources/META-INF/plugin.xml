@@ -4,10 +4,31 @@
     <name>Thrift-Formatter</name>
     <vendor email="alingse@foxmail.com" url="https://github.com/thrift-labs">Thrift Labs</vendor>
     <description><![CDATA[
-    just a copy of thrift-fmt
-    just a copy of thrift-fmt
-    just a copy of thrift-fmt
-    just a copy of thrift-fmt
+    <h1>Thrift Formatter</h1>
+        <p>A Thrift file formatter plugin</p>
+        <p>Use: <a href="https://github.com/thrift-labs/thrift-fmt-java">thrift-fmt-java</a> (a Java implementation of <a href="https://github.com/thrift-labs/thrift-fmt">thrift-fmt</a>)</p>
+    <h2>Features</h2>
+    <ul>
+        <li>Keeping the comments</li>
+        <li>Align the tail comment of struct/enum</li>
+        <li>[Option] Align by field's each part in struct/enum/union/exception</li>
+        <li>[Option] Patch the missed list separator</li>
+        <li>[Option] Patch the missed 'required' in field</li>
+    </ul>
+    <h3>Extension Settings</h3>
+    <ul>
+        <li><strong>patchRequired</strong>: default true - If true, it will add missing 'required' for fields in structs or others.</li>
+        <li><strong>patchSeparator</strong>: default true - If true, it will add missing ',' for fields in structs or others and remove ',' at the tail of functions in services.</li>
+        <li><strong>indentSize</strong>: default 4 - Sets the number of spaces for indentation in fields of structs or enums and functions in services.</li>
+        <li><strong>alignByAssign</strong>: default false - If true, it will align by the assignment part of fields, supporting fields in structs or others.</li>
+        <li><strong>alignByField</strong>: default false - If true, it will align by each part of fields, supporting fields in structs or others. If true, it will ignore the alignByAssign option.</li>
+    </ul>
+
+    <h2>Known Issues</h2>
+    <p>See <a href="https://github.com/thrift-labs/thrift-fmt-jetbrains/issues">#issues</a></p>
+
+    <h2>License</h2>
+    <p>MIT License</p>
   ]]></description>
     <depends>com.intellij.modules.platform</depends>
     <extensions defaultExtensionNs="com.intellij">
@@ -18,5 +39,7 @@
                 language="Thrift"
                 extensions="thrift"/>
         <formattingService implementation="thriftlabs.thriftformatter.ThriftFormatterService"/>
+        <applicationService serviceImplementation="thriftlabs.thriftformatter.ThriftFormatterSetting"/>
+        <projectConfigurable id="ThriftFormatterConfigurable" displayName="Thrift Formatter Settings" instance="thriftlabs.thriftformatter.PluginConfigurable"/>
     </extensions>
 </idea-plugin>
