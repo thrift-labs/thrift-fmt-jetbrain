@@ -1,4 +1,4 @@
-.run/
+#.run/
 build/
 .gradle/
 # Compiled class file
